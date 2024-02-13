@@ -1,20 +1,25 @@
+package ru.yandex.javacource.blokhin.schedule.task;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Epic extends Task {
     private ArrayList<Integer> subtasksId = new ArrayList<>();
 
-    public Epic(String name, String description, int id, TaskStatus status) {
-        super(name, description, id, status);
+    public Epic(String name, String description) {
+        super(name, description);
     }
 
-    public Epic(String name, String description, int id) {
-        super(name, description, id);
+    public Epic(String name, String description, TaskStatus status) {
+        super(name, description, status);
+    }
+
+    public Epic(String name, String description, TaskStatus status, int id) {
+        super(name, description, status, id);
     }
 
     @Override
     public String toString() {
-        return "Epic{" +
+        return "ru.yandex.javacource.blokhin.schedule.task.Epic{" +
                 "name='" + super.getName() + '\'' +
                 ", description='" + super.getDescription() + '\'' +
                 ", id=" + super.getId() +

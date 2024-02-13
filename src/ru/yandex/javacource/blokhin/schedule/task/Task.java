@@ -1,3 +1,7 @@
+package ru.yandex.javacource.blokhin.schedule.task;
+
+import java.util.Objects;
+
 public class Task {
 
     private String name;
@@ -5,16 +9,21 @@ public class Task {
     private int id;
     private TaskStatus status = TaskStatus.NEW;
 
-    public Task(String name, String description, int id, TaskStatus status) {
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.id = id;
+    }
+
+    public Task(String name, String description, TaskStatus status) {
+        this.name = name;
+        this.description = description;
         this.status = status;
     }
 
-    public Task(String name, String description, int id) {
+    public Task(String name, String description, TaskStatus status, int id) {
         this.name = name;
         this.description = description;
+        this.status = status;
         this.id = id;
     }
 
@@ -23,12 +32,25 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "ru.yandex.javacource.blokhin.schedule.task.Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, id, status);
     }
 
     public String getName() {
