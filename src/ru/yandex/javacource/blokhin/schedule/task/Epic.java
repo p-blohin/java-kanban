@@ -13,8 +13,8 @@ public class Epic extends Task {
         super(name, description, status);
     }
 
-    public Epic(String name, String description, TaskStatus status, int id) {
-        super(name, description, status, id);
+    public Epic(String name, String description, int id) {
+        super(name, description, id);
     }
 
     @Override
@@ -35,5 +35,6 @@ public class Epic extends Task {
     public void setSubtasksId(ArrayList<Integer> subtasksId) {
         this.subtasksId = subtasksId;
     }
+
 
 }

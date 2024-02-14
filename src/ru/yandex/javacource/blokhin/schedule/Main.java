@@ -20,25 +20,20 @@ public class Main {
         int epic1 = taskManager.addNewEpic(new Epic("Дела мужчины",
                 "Что должен сделать каждый мужчина в своей жизни")); // id 4
 
-        int subtask1 = taskManager.addNewSubtask(taskManager.getEpic(epic1),
-                new Subtask("Посадить дерево",
-                "Каждый мужчина должен посадить дерево")); // id 5
-        int subtask2 = taskManager.addNewSubtask(taskManager.getEpic(epic1),
-                new Subtask("Построить дом",
-                "Каждый мужчина должен построить дом")); // id 6
-        int subtask3 = taskManager.addNewSubtask(taskManager.getEpic(epic1),
-                new Subtask("Вырастить сына",
-                "Каждый мужчина должен вырастить сына")); // id 7
+        int subtask1 = taskManager.addNewSubtask(new Subtask("Посадить дерево",
+                "Каждый мужчина должен посадить дерево", 4)); // id 5
+        int subtask2 = taskManager.addNewSubtask(new Subtask("Построить дом",
+                "Каждый мужчина должен построить дом", 4)); // id 6
+        int subtask3 = taskManager.addNewSubtask(new Subtask("Вырастить сына",
+                "Каждый мужчина должен вырастить сына", 4)); // id 7
 
         int epic2 = taskManager.addNewEpic(new Epic("Дела русской женщины",
                 "Что должна сделать каждая русская женщина")); // id 8
 
-        int subtask4 = taskManager.addNewSubtask(taskManager.getEpic(epic2),
-                new Subtask("Зайти в горящую избу",
-                "Каждая русская женщина в горящую избу войдёт")); // id 9
-        int subtask5 = taskManager.addNewSubtask(taskManager.getEpic(epic2),
-                new Subtask("Остановить коня на скаку",
-                "Каждая женщина коня на скаку остановит")); // id 10
+        int subtask4 = taskManager.addNewSubtask(new Subtask("Зайти в горящую избу",
+                "Каждая русская женщина в горящую избу войдёт", 8)); // id 9
+        int subtask5 = taskManager.addNewSubtask(new Subtask("Остановить коня на скаку",
+                "Каждая женщина коня на скаку остановит", 8)); // id 10
 
         System.out.println("************************");
 
@@ -56,9 +51,9 @@ public class Main {
 
         taskManager.deleteTaskById(2);
         taskManager.getTasks();
-        taskManager.getAllSubtaskByEpic(4);
+        System.out.println(taskManager.getEpicSubtasks(4));
         taskManager.deleteEpicById(8);
-        taskManager.deleteSubtaskById(5);
+        taskManager.deleteSubtaskById(10);
 
         System.out.println("************************");
 
@@ -69,7 +64,12 @@ public class Main {
                 "Каждый мужчина должен построить дом", TaskStatus.DONE, 6, 4));
         taskManager.updateSubtask(new Subtask("Вырастить сына",
                 "Каждый мужчина должен вырастить сына", TaskStatus.DONE, 7, 4));
-        taskManager.epicProgressCheck(4);
+        taskManager.updateEpicStatus(4);
+
+        System.out.println("************************");
+
+        taskManager.updateEpic(new Epic("Дела мужчины",
+                "Что должен сделать каждый мужчина в своей жизни (если очень захочет)", 4));
 
         System.out.println("************************");
 
