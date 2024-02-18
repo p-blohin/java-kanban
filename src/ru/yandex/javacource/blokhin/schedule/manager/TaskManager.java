@@ -120,7 +120,7 @@ public class TaskManager {
     }
 
     /// Обновление эпика на статус
-    public void updateEpicStatus(int epicId) {
+    /*public void updateEpicStatus(int epicId) {
         Epic epic = epics.get(epicId);
         ArrayList<Integer> subtasksToCheck = epic.getSubtasksId();
         ArrayList<TaskStatus> subtasksStatus = new ArrayList<>();
@@ -136,15 +136,41 @@ public class TaskManager {
         if (!(subtasksStatus.isEmpty())) {
             if (!(subtasksStatus.contains(TaskStatus.NEW) &&
                     !(subtasksStatus.contains(TaskStatus.IN_PROGRESS)))) {
-                epics.get(epicId).setStatus(TaskStatus.DONE);
+                epic.setStatus(TaskStatus.DONE);
                 System.out.println("Эпик с id " + epicId + " выполнен.");
             } else {
                 System.out.println("Эпик с id " + epicId + " ещё в работе.");
             }
         }
+    } */
+
+    /// Альтернативный вариант
+    private void updateEpicStatus(int epicId) {
+        Epic epic = epics.get(epicId);
+        ArrayList<Integer> subs = epic.getSubtasksId();
+        if (subs.isEmpty()) {
+            epic.setStatus(TaskStatus.NEW);
+            return;
+        }
+        TaskStatus status = null;
+        for (int id : subs) {
+            final Subtask subtask = subtasks.get(id);
+            if (status == null) {
+                status = subtask.getStatus();
+                continue;
+            }
+
+            if (status.equals(subtask.getStatus()) &&
+            !status.equals(TaskStatus.IN_PROGRESS)) {
+                continue;
+            }
+            epic.setStatus(TaskStatus.IN_PROGRESS);
+            return;
+        }
+        epic.setStatus(status);
     }
 
-    /// вывод всех сабтасков для эпика
+    /// Вывод всех сабтасков для эпика
 
     public ArrayList<Subtask> getEpicSubtasks(int epicId) {
         ArrayList<Subtask> tasks = new ArrayList<>();

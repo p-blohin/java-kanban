@@ -64,7 +64,7 @@ public class Main {
                 "Каждый мужчина должен построить дом", TaskStatus.DONE, 6, 4));
         taskManager.updateSubtask(new Subtask("Вырастить сына",
                 "Каждый мужчина должен вырастить сына", TaskStatus.DONE, 7, 4));
-        taskManager.updateEpicStatus(4);
+        //taskManager.updateEpicStatus(4);
 
         System.out.println("************************");
 
