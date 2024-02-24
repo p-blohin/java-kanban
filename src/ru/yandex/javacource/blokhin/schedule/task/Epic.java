@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class Epic extends Task {
     private ArrayList<Integer> subtasksId = new ArrayList<>();
 
+    public Epic() {
+        super();
+    }
+
     public Epic(String name, String description) {
         super(name, description);
     }
@@ -15,6 +19,11 @@ public class Epic extends Task {
 
     public Epic(String name, String description, int id) {
         super(name, description, id);
+    }
+
+    public Epic(String name, String description, int id, ArrayList<Integer> subtasksId) {
+        super(name, description, id);
+        this.subtasksId = subtasksId;
     }
 
     @Override
@@ -36,5 +45,9 @@ public class Epic extends Task {
         this.subtasksId = subtasksId;
     }
 
+    // метод для unit-теста
+    public void removeSubtask(int id) {
+        subtasksId.remove(id);
+    }
 
 }

@@ -1,14 +1,16 @@
 package ru.yandex.javacource.blokhin.schedule;
 
+import ru.yandex.javacource.blokhin.schedule.managers.Managers;
+import ru.yandex.javacource.blokhin.schedule.managers.taskmanager.TaskManager;
 import ru.yandex.javacource.blokhin.schedule.task.*;
-import ru.yandex.javacource.blokhin.schedule.manager.TaskManager;
+import ru.yandex.javacource.blokhin.schedule.managers.taskmanager.InMemoryTaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Поехали!");
 
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
         int task1 = taskManager.addNewTask(new Task("Приготовить еды",
                 "Приготовить еды на обед")); // id 1
@@ -43,33 +45,51 @@ public class Main {
 
         System.out.println("************************");
 
-        taskManager.getTask(1);
-        taskManager.getEpic(8);
-        taskManager.getSubtask(9);
+        taskManager.getTask(task1);
+        taskManager.getEpic(epic2);
+        taskManager.getSubtask(subtask4);
 
         System.out.println("************************");
 
-        taskManager.deleteTaskById(2);
+        taskManager.deleteTaskById(task2);
         taskManager.getTasks();
-        System.out.println(taskManager.getEpicSubtasks(4));
-        taskManager.deleteEpicById(8);
-        taskManager.deleteSubtaskById(10);
+        System.out.println(taskManager.getEpicSubtasks(epic1));
+        taskManager.deleteEpicById(epic2);
+        taskManager.deleteSubtaskById(subtask5);
 
         System.out.println("************************");
 
-        taskManager.updateTask(new Task("Приготовить еды",
-                "Приготовить еды на ужин", TaskStatus.DONE, 1));
-        taskManager.getTask(1);
-        taskManager.updateSubtask(new Subtask("Построить дом",
-                "Каждый мужчина должен построить дом", TaskStatus.DONE, 6, 4));
-        taskManager.updateSubtask(new Subtask("Вырастить сына",
-                "Каждый мужчина должен вырастить сына", TaskStatus.DONE, 7, 4));
-        //taskManager.updateEpicStatus(4);
+        taskManager.updateTask(new Task
+                (
+                "Приготовить еды",
+                "Приготовить еды на ужин",
+                TaskStatus.DONE,
+                1
+                ));
+        taskManager.getTask(task1);
+        taskManager.updateSubtask(new Subtask
+                (
+                "Построить дом",
+                "Каждый мужчина должен построить дом",
+                TaskStatus.DONE,
+                6,
+                4
+                ));
+        taskManager.updateSubtask(new Subtask
+                ("Вырастить сына",
+                "Каждый мужчина должен вырастить сына",
+                        TaskStatus.DONE,
+                        7,
+                        4
+                ));
 
         System.out.println("************************");
 
-        taskManager.updateEpic(new Epic("Дела мужчины",
-                "Что должен сделать каждый мужчина в своей жизни (если очень захочет)", 4));
+        taskManager.updateEpic(new Epic
+                ("Дела мужчины",
+                "Что должен сделать каждый мужчина в своей жизни (если очень захочет)",
+                        4
+                ));
 
         System.out.println("************************");
 
