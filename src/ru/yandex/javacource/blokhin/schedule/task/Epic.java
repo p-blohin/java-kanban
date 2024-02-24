@@ -17,11 +17,11 @@ public class Epic extends Task {
         super(name, description, status);
     }
 
-    public Epic(String name, String description, int id) {
+    public Epic(String name, String description, Integer id) {
         super(name, description, id);
     }
 
-    public Epic(String name, String description, int id, ArrayList<Integer> subtasksId) {
+    public Epic(String name, String description, Integer id, ArrayList<Integer> subtasksId) {
         super(name, description, id);
         this.subtasksId = subtasksId;
     }
@@ -46,7 +46,7 @@ public class Epic extends Task {
     }
 
     // метод для unit-теста
-    public void removeSubtask(int id) {
+    public void removeSubtask(Integer id) {
         subtasksId.remove(id);
     }
 

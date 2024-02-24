@@ -1,15 +1,77 @@
 package ru.yandex.javacource.blokhin.schedule.test;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.javacource.blokhin.schedule.managers.*;
 import ru.yandex.javacource.blokhin.schedule.managers.taskmanager.TaskManager;
 import ru.yandex.javacource.blokhin.schedule.task.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
+
+    Task task, task1, task2;
+    Epic epic, epic1, epic2;
+    Subtask subtask, subtask1, subtask2,
+            subtask3, subtask4, subtask5,
+            subtask6, subtask7, subtask8;
+
+    @BeforeEach
+    void setUp() {
+        task = new Task("Тест - название таска",
+                "Тест - описание таска",
+                1);
+        task1 = new Task("Тест - название таска №1",
+                "Тест - описание таска №1",
+                2);
+        task2 = new Task("Тест - название таска №2",
+                "Тест - описание таска №2",
+                3);
+
+        epic = new Epic("Тест - название эпика",
+                "Тест - описание эпика",
+                4);
+        epic1 = new Epic("Тест - название эпика №1",
+                "Тест - описание эпика №1",
+                5);
+        epic2 = new Epic("Тест - название эпика №2",
+                "Тест - описание эпика №2",
+                6);
+
+        subtask = new Subtask("Тест - название сабтаска",
+                "Тест - описание сабтаска",
+                7, 4);
+        subtask1 = new Subtask("Тест - название сабтаска №1",
+                "Тест - описание сабтаска №1",
+                8, 4);
+        subtask2 = new Subtask("Тест - название сабтаска №2",
+                "Тест - описание сабтаска №2",
+                9, 4);
+
+        subtask3 = new Subtask("Тест - название сабтаска №3",
+                "Тест - описание сабтаска №3",
+                10, 5);
+        subtask4 = new Subtask("Тест - название сабтаска №4",
+                "Тест - описание сабтаска №4",
+                11, 5);
+        subtask5 = new Subtask("Тест - название сабтаска №5",
+                "Тест - описание сабтаска №5",
+                12, 5);
+
+        subtask6 = new Subtask("Тест - название сабтаска №6",
+                "Тест - описание сабтаска №6",
+                13, 6);
+        subtask7 = new Subtask("Тест - название сабтаска №7",
+                "Тест - описание сабтаска №7",
+                14, 6);
+        subtask8 = new Subtask("Тест - название сабтаска №8",
+                "Тест - описание сабтаска №8",
+                15, 6);
+
+    }
 
     // ----------------------------------------------------------------
     // Тест на добавление объектов
@@ -20,11 +82,7 @@ class InMemoryTaskManagerTest {
     void addNewTask() {
         TaskManager taskManager = Managers.getDefault();
 
-        Task task = new Task();
-        task.setName("Тест - название таска");
-        task.setDescription("Тест - описание таска");
-
-        int savedTaskId = taskManager.addNewTask(task);
+        Integer savedTaskId = taskManager.addNewTask(task);
         Task savedTask = taskManager.getTask(savedTaskId);
 
         Task testTask = new Task("Тест - название таска", "Тест - описание таска", 1);
@@ -38,21 +96,13 @@ class InMemoryTaskManagerTest {
     void addNewEpic() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-        ArrayList<Integer> subtasks = new ArrayList<>();
-        subtasks.add(2);
-        subtasks.add(3);
-        epic.setSubtasksId(subtasks);
-
-        int savedEpicId = taskManager.addNewEpic(epic);
+        Integer savedEpicId = taskManager.addNewEpic(epic);
         Epic savedEpic = taskManager.getEpic(savedEpicId);
 
         ArrayList<Integer> testSubtasks = new ArrayList<>();
-        testSubtasks.add(2);
-        testSubtasks.add(3);
-        Epic testEpic = new Epic("Тест - название эпика", "Тест - описание эпика", 1, testSubtasks);
+        testSubtasks.add(7);
+        testSubtasks.add(8);
+        Epic testEpic = new Epic("Тест - название эпика", "Тест - описание эпика", 4, testSubtasks);
 
         assertNotNull(savedEpic, "Эпик не был сохранён.");
         assertEquals(testEpic, savedEpic, "Эпик сохранён неверно.");
@@ -63,23 +113,12 @@ class InMemoryTaskManagerTest {
     void addNewSubtask() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-        ArrayList<Integer> subtasks = new ArrayList<>();
-        subtasks.add(2);
-        epic.setSubtasksId(subtasks);
-
-        Subtask subtask = new Subtask();
-        subtask.setName("Тест - название сабтаска");
-        subtask.setDescription("Тест - описание сабтаска");
-        subtask.setEpicId(1);
-
         taskManager.addNewEpic(epic);
-        int savedSubtaskId = taskManager.addNewSubtask(subtask);
+        Integer savedSubtaskId = taskManager.addNewSubtask(subtask);
+        System.out.println("Сохранённое id - " + savedSubtaskId);
         Subtask savedSubtask = taskManager.getSubtask(savedSubtaskId);
 
-        Subtask testSubtask = new Subtask("Тест - название сабтаска", "Тест - описание сабтаска", 2, 1);
+        Subtask testSubtask = new Subtask("Тест - название сабтаска", "Тест - описание сабтаска", 7, 4);
 
         assertNotNull(savedSubtask, "Сабтаск не был сохранён.");
         assertEquals(testSubtask, savedSubtask, "Сабтаск сохранён неверно.");
@@ -94,25 +133,17 @@ class InMemoryTaskManagerTest {
     void getTasks() {
         TaskManager taskManager = Managers.getDefault();
 
-        Task task1 = new Task();
-        task1.setName("Тест - название таска №1");
-        task1.setDescription("Тест - описание таска №1");
-
-        Task task2 = new Task();
-        task2.setName("Тест - название таска №2");
-        task2.setDescription("Тест - описание таска №2");
-
         taskManager.addNewTask(task1);
         taskManager.addNewTask(task2);
 
-        Task testTask1 = new Task("Тест - название таска №1", "Тест - описание таска №1", 1);
-        Task testTask2 = new Task("Тест - название таска №2", "Тест - описание таска №2", 2);
+        Task testTask1 = new Task("Тест - название таска №1", "Тест - описание таска №1", 2);
+        Task testTask2 = new Task("Тест - название таска №2", "Тест - описание таска №2", 3);
 
-        ArrayList<Task> testTasks = new ArrayList<>();
+        List<Task> testTasks = new ArrayList<>();
         testTasks.add(testTask1);
         testTasks.add(testTask2);
 
-        ArrayList<Task> tasks = taskManager.getTasks();
+        List<Task> tasks = taskManager.getTasks();
 
         assertNotNull(tasks, "Список тасков не найден.");
         assertEquals(testTasks, tasks, "Списки тасков не совпадают, ошибка в сохранении.");
@@ -123,35 +154,17 @@ class InMemoryTaskManagerTest {
     void getEpics() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic1 = new Epic();
-        epic1.setName("Тест - название эпика №1");
-        epic1.setDescription("Тест - описание эпика №1");
-        ArrayList<Integer> subtasks1 = new ArrayList<>();
-        subtasks1.add(3);
-        epic1.setSubtasksId(subtasks1);
-
-        Epic epic2 = new Epic();
-        epic2.setName("Тест - название эпика №2");
-        epic2.setDescription("Тест - описание эпика №2");
-        ArrayList<Integer> subtasks2 = new ArrayList<>();
-        subtasks2.add(4);
-        epic2.setSubtasksId(subtasks2);
-
         taskManager.addNewEpic(epic1);
         taskManager.addNewEpic(epic2);
 
-        ArrayList<Integer> subtasksTest1 = new ArrayList<>();
-        subtasksTest1.add(3);
-        ArrayList<Integer> subtasksTest2 = new ArrayList<>();
-        subtasksTest2.add(4);
-        Epic testEpic1 = new Epic("Тест - название эпика №1", "Тест - описание эпика №1", 1, subtasksTest1);
-        Epic testEpic2 = new Epic("Тест - название эпика №2", "Тест - описание эпика №2", 2, subtasksTest2);
+        Epic testEpic1 = new Epic("Тест - название эпика №1", "Тест - описание эпика №1", 5);
+        Epic testEpic2 = new Epic("Тест - название эпика №2", "Тест - описание эпика №2", 6);
 
-        ArrayList<Epic> testEpics = new ArrayList<>();
+        List<Epic> testEpics = new ArrayList<>();
         testEpics.add(testEpic1);
         testEpics.add(testEpic2);
 
-        ArrayList<Epic> epics = taskManager.getEpics();
+        List<Epic> epics = taskManager.getEpics();
 
         assertNotNull(epics, "Список эпиков не найден.");
         assertEquals(testEpics, epics, "Списки эпиков не совпадают, ошибка в сохранении.");
@@ -162,36 +175,18 @@ class InMemoryTaskManagerTest {
     void getSubtasks() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-        ArrayList<Integer> subtasksToAdd = new ArrayList<>();
-        subtasksToAdd.add(2);
-        subtasksToAdd.add(3);
-        epic.setSubtasksId(subtasksToAdd);
-
-        Subtask subtask1 = new Subtask();
-        subtask1.setName("Тест - название сабтаска №1");
-        subtask1.setDescription("Тест - описание сабтаска №1");
-        subtask1.setEpicId(1);
-
-        Subtask subtask2 = new Subtask();
-        subtask2.setName("Тест - название сабтаска №2");
-        subtask2.setDescription("Тест - описание сабтаска №2");
-        subtask2.setEpicId(1);
-
         taskManager.addNewEpic(epic);
         taskManager.addNewSubtask(subtask1);
         taskManager.addNewSubtask(subtask2);
 
-        Subtask testSubtask1 = new Subtask("Тест - название сабтаска №1", "Тест - описание сабтаска №1", 2, 1);
-        Subtask testSubtask2 = new Subtask("Тест - название сабтаска №2", "Тест - описание сабтаска №2", 3, 1);
+        Subtask testSubtask1 = new Subtask("Тест - название сабтаска №1", "Тест - описание сабтаска №1", 8, 4);
+        Subtask testSubtask2 = new Subtask("Тест - название сабтаска №2", "Тест - описание сабтаска №2", 9, 4);
 
-        ArrayList<Subtask> testSubtasks = new ArrayList<>();
+        List<Subtask> testSubtasks = new ArrayList<>();
         testSubtasks.add(testSubtask1);
         testSubtasks.add(testSubtask2);
 
-        ArrayList<Subtask> subtasks = taskManager.getSubtasks();
+        List<Subtask> subtasks = taskManager.getSubtasks();
 
         assertNotNull(subtasks, "Список сабтасков не найден.");
         assertEquals(testSubtasks, subtasks, "Списки сабтасков не совпадают, ошибка в сохранении.");
@@ -202,27 +197,24 @@ class InMemoryTaskManagerTest {
     void getEpicSubtasks() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-
-        Subtask subtask1 = new Subtask();
-        subtask1.setName("Тест - название сабтаска №1");
-        subtask1.setDescription("Тест - описание сабтаска №1");
-        subtask1.setEpicId(1);
-
         taskManager.addNewEpic(epic);
+        taskManager.addNewSubtask(subtask);
         taskManager.addNewSubtask(subtask1);
+        taskManager.addNewSubtask(subtask2);
 
-        ArrayList<Subtask> savedSubtasks = taskManager.getEpicSubtasks(1);
+        List<Subtask> savedSubtasks = taskManager.getEpicSubtasks(4);
 
-        Subtask testSubtask1 = new Subtask("Тест - название сабтаска №1", "Тест - описание сабтаска №1", 2, 1);
+        Subtask testSubtask1 = new Subtask("Тест - название сабтаска", "Тест - описание сабтаска", 7, 4);
+        Subtask testSubtask2 = new Subtask("Тест - название сабтаска №1", "Тест - описание сабтаска №1", 8, 4);
+        Subtask testSubtask3 = new Subtask("Тест - название сабтаска №2", "Тест - описание сабтаска №2", 9, 4);
 
-        ArrayList<Subtask> testSubtasks = new ArrayList<>();
+        List<Subtask> testSubtasks = new ArrayList<>();
         testSubtasks.add(testSubtask1);
+        testSubtasks.add(testSubtask2);
+        testSubtasks.add(testSubtask3);
 
         assertNotNull(savedSubtasks, "Для выбранного эпика сабтасков нет.");
-        assertEquals(1, savedSubtasks.size(), "Кол-во привязанных сабтасков не совпадают.");
+        assertEquals(3, savedSubtasks.size(), "Кол-во привязанных сабтасков не совпадают.");
         assertEquals(testSubtasks, savedSubtasks, "Списки привязанных сабтасков не совпадают.");
     }
 
@@ -235,11 +227,7 @@ class InMemoryTaskManagerTest {
     void getTask() {
         TaskManager taskManager = Managers.getDefault();
 
-        Task task = new Task();
-        task.setName("Тест - название таска");
-        task.setDescription("Тест - описание таска");
-
-        int id = taskManager.addNewTask(task);
+        Integer id = taskManager.addNewTask(task);
         Task savedTask = taskManager.getTask(id);
 
         Task testTask = new Task("Тест - название таска", "Тест - описание таска", 1);
@@ -253,21 +241,13 @@ class InMemoryTaskManagerTest {
     void getEpic() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-        ArrayList<Integer> subtasks = new ArrayList<>();
-        subtasks.add(2);
-        subtasks.add(3);
-        epic.setSubtasksId(subtasks);
-
-        int id = taskManager.addNewEpic(epic);
+        Integer id = taskManager.addNewEpic(epic);
         Epic savedEpic = taskManager.getEpic(id);
 
         ArrayList<Integer> testSubtasks = new ArrayList<>();
-        testSubtasks.add(2);
-        testSubtasks.add(3);
-        Epic testEpic = new Epic("Тест - название эпика", "Тест - описание эпика", 1, testSubtasks);
+        testSubtasks.add(7);
+        testSubtasks.add(8);
+        Epic testEpic = new Epic("Тест - название эпика", "Тест - описание эпика", 4, testSubtasks);
 
         assertNotNull(savedEpic, "Эпик не был найден.");
         assertEquals(testEpic, savedEpic, "Полученный эпик не совпадает ожидаемым объектом.");
@@ -278,23 +258,11 @@ class InMemoryTaskManagerTest {
     void getSubtask() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-        ArrayList<Integer> subtasks = new ArrayList<>();
-        subtasks.add(2);
-        epic.setSubtasksId(subtasks);
-
-        Subtask subtask = new Subtask();
-        subtask.setName("Тест - название сабтаска");
-        subtask.setDescription("Тест - описание сабтаска");
-        subtask.setEpicId(1);
-
         taskManager.addNewEpic(epic);
-        int savedSubtaskId = taskManager.addNewSubtask(subtask);
+        Integer savedSubtaskId = taskManager.addNewSubtask(subtask);
         Subtask savedSubtask = taskManager.getSubtask(savedSubtaskId);
 
-        Subtask testSubtask = new Subtask("Тест - название сабтаска", "Тест - описание сабтаска", 2, 1);
+        Subtask testSubtask = new Subtask("Тест - название сабтаска", "Тест - описание сабтаска", 7, 4);
 
         assertNotNull(savedSubtask, "Сабтаск не был найден.");
         assertEquals(testSubtask, savedSubtask, "Полученный сабтаск не совпадает ожидаемым объектом.");
@@ -309,11 +277,7 @@ class InMemoryTaskManagerTest {
     void updateTask() {
         TaskManager taskManager = Managers.getDefault();
 
-        Task task = new Task();
-        task.setName("Тест - название таска");
-        task.setDescription("Тест - описание таска");
-
-        int savedTaskId = taskManager.addNewTask(task);
+        Integer savedTaskId = taskManager.addNewTask(task);
 
         Task newTask = new Task();
         newTask.setName("Тест - название обновленного таска");
@@ -334,25 +298,17 @@ class InMemoryTaskManagerTest {
     void updateEpic() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-        ArrayList<Integer> subtasks = new ArrayList<>();
-        subtasks.add(2);
-        subtasks.add(3);
-        epic.setSubtasksId(subtasks);
-
-        int savedEpicId = taskManager.addNewEpic(epic);
+        Integer savedEpicId = taskManager.addNewEpic(epic);
 
         Epic newEpic = new Epic();
         newEpic.setName("Тест - название обновленного эпика");
         newEpic.setDescription("Тест - описание обновленного эпика");
         ArrayList<Integer> newSubtasks = new ArrayList<>();
-        subtasks.add(4);
-        subtasks.add(5);
+        newSubtasks.add(8);
+        newSubtasks.add(9);
         newEpic.setSubtasksId(newSubtasks);
 
-        Epic updatedEpic = new Epic("Тест - название обновленного эпика", "Тест - описание обновленного эпика", 1, newSubtasks);
+        Epic updatedEpic = new Epic("Тест - название обновленного эпика", "Тест - описание обновленного эпика", 4, newSubtasks);
 
         taskManager.updateEpic(updatedEpic);
 
@@ -367,27 +323,15 @@ class InMemoryTaskManagerTest {
     void updateSubtask() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-        ArrayList<Integer> subtasks = new ArrayList<>();
-        subtasks.add(2);
-        epic.setSubtasksId(subtasks);
-
-        Subtask subtask = new Subtask();
-        subtask.setName("Тест - название сабтаска");
-        subtask.setDescription("Тест - описание сабтаска");
-        subtask.setEpicId(1);
-
         taskManager.addNewEpic(epic);
-        int savedSubtaskId = taskManager.addNewSubtask(subtask);
+        Integer savedSubtaskId = taskManager.addNewSubtask(subtask);
 
         Subtask newSubtask = new Subtask();
         newSubtask.setName("Тест - название обновленного сабтаска");
         newSubtask.setDescription("Тест - описание обновленного сабтаска");
-        newSubtask.setEpicId(1);
+        newSubtask.setEpicId(4);
 
-        Subtask updatedSubtask = new Subtask("Тест - название обновленного сабтаска", "Тест - описание обновленного сабтаска", 2, 1);
+        Subtask updatedSubtask = new Subtask("Тест - название обновленного сабтаска", "Тест - описание обновленного сабтаска", 7, 4);
 
         taskManager.updateSubtask(updatedSubtask);
 
@@ -406,23 +350,15 @@ class InMemoryTaskManagerTest {
     void deleteTasks() {
         TaskManager taskManager = Managers.getDefault();
 
-        Task task1 = new Task();
-        task1.setName("Тест - название таска №1");
-        task1.setDescription("Тест - описание таска №1");
-
-        Task task2 = new Task();
-        task2.setName("Тест - название таска №2");
-        task2.setDescription("Тест - описание таска №2");
-
         taskManager.addNewTask(task1);
         taskManager.addNewTask(task2);
 
-        ArrayList<Task> tasks = taskManager.getTasks();
+        List<Task> tasks = taskManager.getTasks();
         assertEquals(2, tasks.size());
 
         taskManager.deleteTasks();
 
-        ArrayList<Task> testTasks = taskManager.getTasks();
+        List<Task> testTasks = taskManager.getTasks();
         assertTrue(testTasks.isEmpty(), "Удаление тасков не произошло.");
     }
 
@@ -431,29 +367,15 @@ class InMemoryTaskManagerTest {
     void deleteEpics() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic1 = new Epic();
-        epic1.setName("Тест - название эпика №1");
-        epic1.setDescription("Тест - описание эпика №1");
-        ArrayList<Integer> subtasks1 = new ArrayList<>();
-        subtasks1.add(3);
-        epic1.setSubtasksId(subtasks1);
-
-        Epic epic2 = new Epic();
-        epic2.setName("Тест - название эпика №2");
-        epic2.setDescription("Тест - описание эпика №2");
-        ArrayList<Integer> subtasks2 = new ArrayList<>();
-        subtasks2.add(4);
-        epic2.setSubtasksId(subtasks2);
-
         taskManager.addNewEpic(epic1);
         taskManager.addNewEpic(epic2);
 
-        ArrayList<Epic> epics = taskManager.getEpics();
+        List<Epic> epics = taskManager.getEpics();
         assertEquals(2, epics.size());
 
         taskManager.deleteEpics();
 
-        ArrayList<Epic> testEpics = taskManager.getEpics();
+        List<Epic> testEpics = taskManager.getEpics();
         assertTrue(testEpics.isEmpty(), "Удаление эпиков не произошло.");
     }
 
@@ -462,34 +384,16 @@ class InMemoryTaskManagerTest {
     void deleteSubtasks() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика");
-        epic.setDescription("Тест - описание эпика");
-        ArrayList<Integer> subtasksToAdd = new ArrayList<>();
-        subtasksToAdd.add(2);
-        subtasksToAdd.add(3);
-        epic.setSubtasksId(subtasksToAdd);
-
-        Subtask subtask1 = new Subtask();
-        subtask1.setName("Тест - название сабтаска №1");
-        subtask1.setDescription("Тест - описание сабтаска №1");
-        subtask1.setEpicId(1);
-
-        Subtask subtask2 = new Subtask();
-        subtask2.setName("Тест - название сабтаска №2");
-        subtask2.setDescription("Тест - описание сабтаска №2");
-        subtask2.setEpicId(1);
-
         taskManager.addNewEpic(epic);
         taskManager.addNewSubtask(subtask1);
         taskManager.addNewSubtask(subtask2);
 
-        ArrayList<Subtask> subtasks = taskManager.getSubtasks();
+        List<Subtask> subtasks = taskManager.getSubtasks();
         assertEquals(2, subtasks.size());
 
         taskManager.deleteSubtasks();
 
-        ArrayList<Subtask> testSubtasks = taskManager.getSubtasks();
+        List<Subtask> testSubtasks = taskManager.getSubtasks();
         assertTrue(testSubtasks.isEmpty(), "Удаление сабтасков не произошло.");
     }
 
@@ -502,28 +406,16 @@ class InMemoryTaskManagerTest {
     void deleteTaskById() {
         TaskManager taskManager = Managers.getDefault();
 
-        Task task1 = new Task();
-        task1.setName("Тест - название таска №1");
-        task1.setDescription("Тест - описание таска №1");
+        taskManager.addNewTask(task);
+        Integer idToDelete = taskManager.addNewTask(task1);
+        taskManager.addNewTask(task2);
 
-        Task task2 = new Task();
-        task2.setName("Тест - название таска №2");
-        task2.setDescription("Тест - описание таска №2");
-
-        Task task3 = new Task();
-        task3.setName("Тест - название таска №3");
-        task3.setDescription("Тест - описание таска №3");
-
-        taskManager.addNewTask(task1);
-        int idToDelete = taskManager.addNewTask(task2);
-        taskManager.addNewTask(task3);
-
-        ArrayList<Task> tasks = taskManager.getTasks();
+        List<Task> tasks = taskManager.getTasks();
         assertEquals(3, tasks.size());
 
         taskManager.deleteTaskById(idToDelete);
 
-        ArrayList<Task> tasksAfterDelete = taskManager.getTasks();
+        List<Task> tasksAfterDelete = taskManager.getTasks();
         assertFalse(tasksAfterDelete.contains(idToDelete), "Удаление передаваемого таска не прошло.");
     }
 
@@ -532,37 +424,16 @@ class InMemoryTaskManagerTest {
     void deleteEpicById() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic1 = new Epic();
-        epic1.setName("Тест - название эпика №1");
-        epic1.setDescription("Тест - описание эпика №1");
-        ArrayList<Integer> subtasks1 = new ArrayList<>();
-        subtasks1.add(4);
-        epic1.setSubtasksId(subtasks1);
+        taskManager.addNewEpic(epic);
+        Integer idToDelete = taskManager.addNewEpic(epic1);
+        taskManager.addNewEpic(epic2);
 
-        Epic epic2 = new Epic();
-        epic2.setName("Тест - название эпика №2");
-        epic2.setDescription("Тест - описание эпика №2");
-        ArrayList<Integer> subtasks2 = new ArrayList<>();
-        subtasks2.add(5);
-        epic2.setSubtasksId(subtasks2);
-
-        Epic epic3 = new Epic();
-        epic3.setName("Тест - название эпика №3");
-        epic3.setDescription("Тест - описание эпика №3");
-        ArrayList<Integer> subtasks3 = new ArrayList<>();
-        subtasks3.add(6);
-        epic3.setSubtasksId(subtasks3);
-
-        taskManager.addNewEpic(epic1);
-        int idToDelete = taskManager.addNewEpic(epic2);
-        taskManager.addNewEpic(epic3);
-
-        ArrayList<Epic> epics = taskManager.getEpics();
+        List<Epic> epics = taskManager.getEpics();
         assertEquals(3, epics.size());
 
         taskManager.deleteEpicById(idToDelete);
 
-        ArrayList<Epic> epicsAfterDelete = taskManager.getEpics();
+        List<Epic> epicsAfterDelete = taskManager.getEpics();
         assertFalse(epicsAfterDelete.contains(idToDelete), "Удаление передаваемого эпика не прошло.");
     }
 
@@ -571,41 +442,17 @@ class InMemoryTaskManagerTest {
     void deleteSubtaskById() {
         TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic();
-        epic.setName("Тест - название эпика №1");
-        epic.setDescription("Тест - описание эпика №1");
-        ArrayList<Integer> subtasksToAdd = new ArrayList<>();
-        subtasksToAdd.add(2);
-        subtasksToAdd.add(3);
-        subtasksToAdd.add(4);
-        epic.setSubtasksId(subtasksToAdd);
-
-        Subtask subtask1 = new Subtask();
-        subtask1.setName("Тест - название сабтаска №1");
-        subtask1.setDescription("Тест - описание сабтаска №1");
-        subtask1.setEpicId(1);
-
-        Subtask subtask2 = new Subtask();
-        subtask2.setName("Тест - название сабтаска №2");
-        subtask2.setDescription("Тест - описание сабтаска №2");
-        subtask2.setEpicId(1);
-
-        Subtask subtask3 = new Subtask();
-        subtask3.setName("Тест - название сабтаска №3");
-        subtask3.setDescription("Тест - описание сабтаска №3");
-        subtask3.setEpicId(1);
-
         taskManager.addNewEpic(epic);
-        taskManager.addNewSubtask(subtask1);
-        int idToDelete = taskManager.addNewSubtask(subtask2);
-        taskManager.addNewSubtask(subtask3);
+        taskManager.addNewSubtask(subtask);
+        Integer idToDelete = taskManager.addNewSubtask(subtask1);
+        taskManager.addNewSubtask(subtask2);
 
-        ArrayList<Subtask> subtasks = taskManager.getSubtasks();
+        List<Subtask> subtasks = taskManager.getSubtasks();
         assertEquals(3, subtasks.size());
 
         taskManager.deleteSubtaskById(idToDelete);
 
-        ArrayList<Subtask> subtasksAfterDelete = taskManager.getSubtasks();
+        List<Subtask> subtasksAfterDelete = taskManager.getSubtasks();
         assertFalse(subtasksAfterDelete.contains(idToDelete), "Удаление передаваемого сабтаска не прошло.");
     }
 }

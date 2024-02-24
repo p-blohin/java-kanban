@@ -3,7 +3,6 @@ package ru.yandex.javacource.blokhin.schedule;
 import ru.yandex.javacource.blokhin.schedule.managers.Managers;
 import ru.yandex.javacource.blokhin.schedule.managers.taskmanager.TaskManager;
 import ru.yandex.javacource.blokhin.schedule.task.*;
-import ru.yandex.javacource.blokhin.schedule.managers.taskmanager.InMemoryTaskManager;
 
 public class Main {
 
@@ -96,5 +95,9 @@ public class Main {
         taskManager.deleteTasks();
         taskManager.deleteEpics();
         taskManager.deleteSubtasks();
+
+        System.out.println("************************");
+
+        System.out.println(taskManager.getHistory());
     }
 }

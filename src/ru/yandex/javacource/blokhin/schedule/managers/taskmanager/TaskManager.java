@@ -3,6 +3,7 @@ package ru.yandex.javacource.blokhin.schedule.managers.taskmanager;
 import ru.yandex.javacource.blokhin.schedule.task.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
 
@@ -11,10 +12,10 @@ public interface TaskManager {
     // ----------------------------------------------------------------
 
     /// Добавление таска
-    int addNewTask(Task task);
+    Integer addNewTask(Task task);
 
     /// Добавление эпика
-    int addNewEpic(Epic epic);
+    Integer addNewEpic(Epic epic);
 
     /// Добавление сабтаска и привязка к эпику
     Integer addNewSubtask(Subtask subtask);
@@ -24,29 +25,29 @@ public interface TaskManager {
     // ----------------------------------------------------------------
 
     /// Вывод тасков
-    ArrayList<Task> getTasks();
+    List<Task> getTasks();
 
     /// Вывод эпиков
-    ArrayList<Epic> getEpics();
+    List<Epic> getEpics();
 
     /// Вывод сабтасков
-    ArrayList<Subtask> getSubtasks();
+    List<Subtask> getSubtasks();
 
     /// Вывод всех сабтасков для эпика
-    ArrayList<Subtask> getEpicSubtasks(int epicId);
+    List<Subtask> getEpicSubtasks(Integer epicId);
 
     // ----------------------------------------------------------------
     // блок по вывода объекта по id
     // ----------------------------------------------------------------
 
     /// Ввывод таска по id
-    Task getTask(int id);
+    Task getTask(Integer id);
 
     /// Вывод эпика по id
-    Epic getEpic(int id);
+    Epic getEpic(Integer id);
 
     /// Вывод сабтаска по id
-    Subtask getSubtask(int id);
+    Subtask getSubtask(Integer id);
 
     // ----------------------------------------------------------------
     // блок по обновлению объекта
@@ -79,12 +80,13 @@ public interface TaskManager {
     // ----------------------------------------------------------------
 
     /// Удаление таска по id
-    void deleteTaskById(int id);
+    void deleteTaskById(Integer id);
 
     /// Удаление эпика по id
-    void deleteEpicById(int id);
+    void deleteEpicById(Integer id);
 
     /// Удаление сабтаска по id
-    void deleteSubtaskById(int id);
+    void deleteSubtaskById(Integer id);
 
+    List<Task> getHistory();
 }

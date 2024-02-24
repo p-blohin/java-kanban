@@ -6,7 +6,7 @@ public class Task {
 
     private String name;
     private String description;
-    private int id;
+    private Integer id;
     private TaskStatus status = TaskStatus.NEW;
 
     public Task(String name, String description) {
@@ -20,13 +20,13 @@ public class Task {
         this.status = status;
     }
 
-    public Task(String name, String description, int id) {
+    public Task(String name, String description, Integer id) {
         this.name = name;
         this.description = description;
         this.id = id;
     }
 
-    public Task(String name, String description, TaskStatus status, int id) {
+    public Task(String name, String description, TaskStatus status, Integer id) {
         this.name = name;
         this.description = description;
         this.status = status;
@@ -75,7 +75,7 @@ public class Task {
         this.description = description;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
