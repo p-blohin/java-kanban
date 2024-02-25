@@ -15,9 +15,7 @@ class InMemoryTaskManagerTest {
 
     Task task, task1, task2;
     Epic epic, epic1, epic2;
-    Subtask subtask, subtask1, subtask2,
-            subtask3, subtask4, subtask5,
-            subtask6, subtask7, subtask8;
+    Subtask subtask, subtask1, subtask2;
 
     @BeforeEach
     void setUp() {
@@ -50,26 +48,6 @@ class InMemoryTaskManagerTest {
         subtask2 = new Subtask("Тест - название сабтаска №2",
                 "Тест - описание сабтаска №2",
                 9, 4);
-
-        subtask3 = new Subtask("Тест - название сабтаска №3",
-                "Тест - описание сабтаска №3",
-                10, 5);
-        subtask4 = new Subtask("Тест - название сабтаска №4",
-                "Тест - описание сабтаска №4",
-                11, 5);
-        subtask5 = new Subtask("Тест - название сабтаска №5",
-                "Тест - описание сабтаска №5",
-                12, 5);
-
-        subtask6 = new Subtask("Тест - название сабтаска №6",
-                "Тест - описание сабтаска №6",
-                13, 6);
-        subtask7 = new Subtask("Тест - название сабтаска №7",
-                "Тест - описание сабтаска №7",
-                14, 6);
-        subtask8 = new Subtask("Тест - название сабтаска №8",
-                "Тест - описание сабтаска №8",
-                15, 6);
 
     }
 
